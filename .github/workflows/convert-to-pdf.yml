@@ -5,31 +5,29 @@ on:
       - '**.md'
 
 jobs:
-  convert_via_pandoc:
+  convert:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Create output directory
-        run: |
-          mkdir output
-          
-      - name: Convert via Pandoc
-        uses: docker://pandoc/latex:2.9
+
+      - name: Markdown to PDF
+        uses: BaileyJM02/markdown-to-pdf@v1.2.0
         with:
-          args: "--pdf-engine=xelatex -V geometry:margin=1in -o output/presentation.pdf presentation.md"
+          input_path: presentation.md
+          output_dir: pdfs
+          build_html: false
 
       - name: Upload PDF
         uses: actions/upload-artifact@v2
         with:
-          name: PDF
-          path: output/presentation.pdf
+          name: Presentation
+          path: pdfs/presentation.pdf
 
       - name: Commit PDF
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          mv output/presentation.pdf ./
+          mv pdfs/presentation.pdf ./
           git add presentation.pdf
           git commit -m "Update PDF" || echo "No changes to commit"
-          git push origin main || echo "No changes to push"
+          git push || echo "No changes to push"
