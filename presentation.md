@@ -2,6 +2,10 @@
 
 ## Úvod do problematiky životního pojištění
 
+### Proč řešit pojištění?
+
+Život přináší mnoho neočekávaných situací, které mohou významně ovlivnit naši finanční stabilitu. Podrobnosti ukazují statistiky:
+
 ### Životní realita v číslech
 
 - V České republice je více než 400 000 invalidních důchodců
