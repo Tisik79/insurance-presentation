@@ -8,26 +8,25 @@ jobs:
   convert:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Markdown to PDF
-        uses: BaileyJM02/markdown-to-pdf@v1.2.0
+      - name: Convert to PDF
+        uses: ibnesayeed/ghaction-markdown-to-pdf@v1
         with:
           input_path: presentation.md
-          output_dir: pdfs
-          build_html: false
+          output_path: presentation.pdf
+          theme: architect
 
-      - name: Upload PDF
-        uses: actions/upload-artifact@v2
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: Presentation
-          path: pdfs/presentation.pdf
+          name: Generated-PDF
+          path: presentation.pdf
 
       - name: Commit PDF
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          mv pdfs/presentation.pdf ./
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           git add presentation.pdf
-          git commit -m "Update PDF" || echo "No changes to commit"
-          git push || echo "No changes to push"
+          git commit -m "Update PDF [skip ci]" || exit 0
+          git push
